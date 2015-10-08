@@ -6,8 +6,13 @@ var draw;
 var player;
 var obstacleList = [];
 
+var letterList = [];
+
 var timeSpawnElapsed = 0;
 var timeSpawnDelay = 1;
+
+var timeLetterElapsed = 0;
+var timeLetterDelay = .05;
 
 function init ()
 {
@@ -17,6 +22,8 @@ function init ()
 
   draw = new Draw();
   player = new Player();
+
+  spawnLetter();
 
   // Events
   canvasElement.addEventListener('mousedown', onMouseDown);
@@ -74,6 +81,19 @@ function spawnEnemy ()
     obstacleList.push(obstacle);
 }
 
+function mix(a, b, ratio)
+{
+    return a * (1 - ratio) + b * ratio;
+}
+
+function spawnLetter()
+{
+    var letter = new Letter();
+    letter.x = 0;
+    letter.y = canvasElement.height * (Math.sin(timeElapsed) * 0.5 + 0.5);
+    letterList.push(letter);
+}
+
 function update ()
 {
   timeElapsed = new Date() / 1000 - timeStarted;
@@ -87,6 +107,17 @@ function update ()
 
   player.update();
   player.draw();
+
+  for (var j = 0; j < letterList.length; j++)
+  {
+      var letter = letterList[j];
+      letter.update();
+      letter.draw();
+      if (letter.timeStart + letter.timeDelay < timeElapsed)
+      {
+         // letterList.splice(i, 1);
+      }
+  }
 
   for (var i = 0; i < obstacleList.length; i++)
   {
@@ -103,6 +134,11 @@ function update ()
   {
       timeSpawnElapsed = timeElapsed;
       spawnEnemy();
+  }
+
+  if (timeLetterElapsed + timeLetterDelay < timeElapsed) {
+      timeLetterElapsed = timeElapsed;
+      spawnLetter();
   }
 
   // Maintain loop

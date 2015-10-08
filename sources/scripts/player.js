@@ -9,9 +9,10 @@ var Player = function ()
   this.speedMove = 5;
 
   this.bulletList = [];
+  this.arrowList = [];
 
   this.fireRateLastTime = 0;
-  this.fireRateDelay = 0.01;
+  this.fireRateDelay = 0.05;
 
   this.velocity = { x: 0, y: 0 };
   this.acceleration = 1;
@@ -54,10 +55,16 @@ var Player = function ()
         {
             this.fireRateLastTime = timeElapsed;
 
-            this.addBullet(this.x, this.y);
-            this.compteur++;
-            console.log(this.compteur);
+            // this.addBullet(this.x, this.y);
+            this.addArrow(this.x, this.y);
         }
+    }
+
+    for (var i = 0; i < this.arrowList.length; i++)
+    {
+        var arrow = this.arrowList[i];
+        arrow.update();
+        arrow.draw();
     }
 
     for (var i = 0; i < this.bulletList.length; i++)
@@ -119,6 +126,21 @@ var Player = function ()
       bullet.direction.y /= dist;
 
       this.bulletList.push(bullet);
+  }
+
+  this.addArrow = function (x, y) {
+      var arrow = new Arrow();
+      arrow.x = x;
+      arrow.y = y;
+
+      arrow.direction.x = mouse.x - arrow.x;
+      arrow.direction.y = mouse.y - arrow.y;
+
+      var dist = Math.sqrt(arrow.direction.x * arrow.direction.x + arrow.direction.y * arrow.direction.y);
+      arrow.direction.x /= dist;
+      arrow.direction.y /= dist;
+
+      this.arrowList.push(arrow);
   }
 
   this.draw = function ()

@@ -19,7 +19,7 @@ var Obstacle = function ()
     }
 
     this.draw = function () {
-        draw.circle(this.x, this.y, this.getSize(), "#ff0000");
+        draw.circle(this.x, this.y, this.getSize(), "#000000");
     }
 
     this.starAnimation = function()
