@@ -33,10 +33,13 @@ var Draw = function ()
     this.context2d.stroke();
   };
 
-  this.text = function(text, x, y)
+  this.text = function(text, x, y, fontSize, color)
   {
-      this.context2d.font = "30px Arial";
-      this.context2d.fillStyle = "#00ff00";
+      fontSize = typeof fontsize !== undefined ? fontSize : 30;
+      color = typeof color !== undefined ? color : "#00ff00";
+      this.context2d.font = fontSize + "px Arial";
+      this.context2d.fillStyle = color;
+      this.context2d.textAlign = "center";
       this.context2d.fillText(text, x, y);
   }
 
@@ -63,5 +66,29 @@ var Draw = function ()
       this.context2d.lineTo(x - droite.x * thickness, y - droite.y * thickness);
 
       this.context2d.fill();
+  };
+
+  
+
+  this.arrow2 = function (x, y, direction, length, thickness) {
+    this.context2d.fillStyle = "#0000ff";
+    this.context2d.strokeStyle = "#ffffff";
+    this.context2d.beginPath();
+
+    var droite = { x: direction.y, y: -direction.x }
+    var x2 = x + direction.x * length;
+    var y2 = y + direction.y * length;
+
+    this.context2d.moveTo(x + droite.x * thickness, y + droite.y * thickness);
+    this.context2d.lineTo(x2 + droite.x * thickness, y2 + droite.y * thickness);
+
+    this.context2d.lineTo(x2 + droite.x * thickness * 2, y2 + droite.y * thickness * 2);
+    this.context2d.lineTo(x2 + direction.x * 30, y2 + direction.y * 30);
+    this.context2d.lineTo(x2 - droite.x * thickness * 2, y2 - droite.y * thickness * 2);
+
+    this.context2d.lineTo(x2 - droite.x * thickness, y2 - droite.y * thickness);
+    this.context2d.lineTo(x - droite.x * thickness, y - droite.y * thickness);
+
+    this.context2d.fill();
   };
 };
