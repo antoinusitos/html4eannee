@@ -65,6 +65,17 @@ var Player = function ()
         var arrow = this.arrowList[i];
         arrow.update();
         arrow.draw();
+
+        for (var j = 0; j < obstacleList.length; j++) {
+            var obstacle = obstacleList[j];
+            if (obstacle.circleCollision(arrow.x, arrow.y, 20))
+            {
+                obstacle.starAnimation();
+                obstacle.addArrow(arrow);
+                this.arrowList.splice(i, 1);
+                spawnParticle(arrow.x, arrow.y, 3 + Math.floor(Math.random() * 3));
+            }
+        }
     }
 
     for (var i = 0; i < this.bulletList.length; i++)

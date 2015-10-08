@@ -11,6 +11,8 @@ var Arrow = function ()
     this.velocity = 1;
     this.gravity = 1;
 
+    this.offset = { x: 0, y: 0 };
+
     this.update = function()
     {
         this.x += this.direction.x * this.speed;

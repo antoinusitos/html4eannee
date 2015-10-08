@@ -11,6 +11,8 @@ var Obstacle = function ()
     this.direction = { x: 1, y: 0 };
     this.speed = 2;
 
+    this.arrowList = [];
+
     this.life = 10;
 
     this.getSize = function()
@@ -20,6 +22,13 @@ var Obstacle = function ()
 
     this.draw = function () {
         draw.circle(this.x, this.y, this.getSize(), "#000000");
+    }
+
+    this.addArrow = function(arrow)
+    {
+        this.arrowList.push(arrow);
+        arrow.offset.x = arrow.x - this.x;
+        arrow.offset.y = arrow.y - this.y;
     }
 
     this.starAnimation = function()
@@ -36,6 +45,14 @@ var Obstacle = function ()
         {
             var ratio = (timeElapsed - this.timeCollisionStart) / this.timeCollisionEnd;
             this.size = 60 + Math.sin(ratio * 10) * 20 * (1 - ratio);
+        }
+
+        for(var i= 0; i < this.arrowList.length; i++)
+        {
+            var arrow = this.arrowList[i];
+            arrow.x = arrow.offset.x + this.x;
+            arrow.y = arrow.offset.y + this.y;
+            arrow.draw();
         }
     }
     

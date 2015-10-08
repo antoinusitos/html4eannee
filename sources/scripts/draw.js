@@ -36,12 +36,13 @@ var Draw = function ()
   this.text = function(text, x, y)
   {
       this.context2d.font = "30px Arial";
-      this.context2d.strokeText(text, x, y);
+      this.context2d.fillStyle = "#00ff00";
+      this.context2d.fillText(text, x, y);
   }
 
   this.arrow = function (x, y, x2, y2, length, thickness)
   {
-      this.context2d.fillStyle = "#ff0000";
+      this.context2d.fillStyle = "#ffffff";
       this.context2d.strokeStyle = "#ffffff";
       this.context2d.beginPath();
 

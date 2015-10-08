@@ -5,7 +5,7 @@ var timeElapsed = 0;
 var draw;
 var player;
 var obstacleList = [];
-
+var particleList = [];
 var letterList = [];
 
 var timeSpawnElapsed = 0;
@@ -34,6 +34,15 @@ function init ()
 
   // Start main loop
   requestAnimationFrame(update);
+}
+
+function spawnParticle(x, y, count)
+{
+    for (var i = 0; i < count; i++)
+    {
+        var particle = new Particle(x, y);
+        particleList.push(particle);
+    }
 }
 
 function spawnEnemy ()
@@ -128,6 +137,13 @@ function update ()
       {
           obstacleList.splice(i, 1);
       }
+  }
+
+  for (var i = 0; i < particleList.length; i++)
+  {
+      var particle = particleList[i];
+      particle.update();
+      particle.draw();
   }
   
   if (timeSpawnElapsed + timeSpawnDelay < timeElapsed)
